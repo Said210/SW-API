@@ -14,12 +14,12 @@
    <!-- End of component -->
 
 
-   <CharactersArea v-bind:charactersprop="characters"/>
+   <CharactersArea v-bind:characterurl="character" v-for="character in characters" :key="character"/>
 </template>
 
 <script>
 import CharactersArea from './CharactersArea.vue'
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: 'FilterArea',
@@ -36,13 +36,9 @@ export default {
   },
   methods: {
     select_movie: function(movie_id, movie_index){
-      for(var char_i = 0; char_i < this.movies[movie_index].characters.length ;  char_i++){
-        axios.get(this.movies[movie_index].characters[char_i])
-        .then((response) => {
-          this.characters.push(response.data.results)
-        })
-      }
-    }
+      console.log(this.movies[movie_index].characters)
+      this.characters = this.movies[movie_index].characters;
+    } 
   },
   mounted() {
     this.characters = this.movies.characters;

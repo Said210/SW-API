@@ -1,24 +1,39 @@
 <template>
    <!-- Start of component -->
-   <div class="bg-white border-2 p-6 rounded-md width-1/3 shadow-lg" v-for="character in charactersprop" v-bind:key="character.name">
-      {{JSON.stringify(character)}}
+   <div class="bg-white border-2 p-6 rounded-md w-full shadow-lg" >
+      <strong>{{name}}</strong> <br>
+      {{birth_year}}
    </div>
    <!-- End of component -->
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'CharactersArea',
   props: {
-    charactersprop: Array
+    characterurl: String
   }, 
   data(){
     return{
-      characters: []
+      name: "",
+      birth_year: ""
     }
     // 
   },
-  mount(){
+  mounted(){
+    console.log(this.characterurl);
+    axios.get(this.characterurl)
+    .then((response) => {      
+      let r = response.data;
+      console.log(r);
+      this.name = r.name;
+      this.birth_year = r.birth_year;
+
+    }).catch(function (error) {
+    // handle error
+    console.log(error);
+  })
   }
 }
 </script>
